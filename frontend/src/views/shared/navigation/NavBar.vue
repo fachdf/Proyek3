@@ -5,20 +5,20 @@
       clipped-left
       fixed
       max-height="75"
-      v-if="!isMobile()"
+      v-if="!$vuetify.breakpoint.mobile"
     >
-      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="d-flex align-center">
+      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="pt-3">
         <v-row align="center">
-          <v-img :src="require('../../../assets/logopolban.png')" max-width="25" contain class="mx-3"/>
+          <v-img :src="require('../../../assets/polban.png')" max-width="45" contain class="mx-4"/>
           <v-col class="pa-0">
             <v-toolbar-title :style="{ color: currentTheme.colorPrimary }">Politeknik Negeri Bandung</v-toolbar-title>
           </v-col>
         </v-row>
       </v-card>
       <v-spacer></v-spacer>
-      <!-- <v-text-field
+      <v-text-field
         hide-details
-        label="Cari disini"
+        label="Cari di sini"
         append-icon="mdi-magnify"
         class="shrink"
         style="width:300px"
@@ -26,52 +26,18 @@
         outlined
         dense
         @click:append="notification_click"
-      ></v-text-field> -->
-      <v-menu offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn class="ml-2" dark icon v-on="on" @click="notification_click()">
-              <v-badge
-                :content="usernotif"
-                :value="usernotif"
-                color="red"
-                overlap
-              >
-              <v-icon :style="{color: currentTheme.colorPrimary}">mdi-bell-outline</v-icon>
-              </v-badge>
-            </v-btn>
-          </template>
-          <v-card class="mx-auto" max-width="300" tile>
-            <v-list flat>
-              <v-subheader>
-                Notification
-                <v-btn
-                  class="ml-4"
-                  color="currentTheme.colorPrimary"
-                  @click="usernotif = 0"
-                >
-                  Clear
-                </v-btn>
-              </v-subheader>
-              <v-list-item-group
-                v-model="selectedItem"
-                color="primary"
-              >
-                <v-list-item
-                  v-for="(item, i) in items"
-                  :key="i"
-                >
-                  <v-list-item-icon>
-                    <v-icon v-text="item.icon"></v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-card>
-      </v-menu>
-      <v-btn depressed :style="{background : currentTheme}" right class="ml-1" height="50px">
+      ></v-text-field> 
+      <v-btn class="ml-2" icon @click="notification_click()">
+        <v-badge
+          :content="usernotif"
+          :value="usernotif"
+          color="red"
+          overlap
+        >
+          <v-icon :style="{color: currentTheme.colorPrimary}">mdi-bell-outline</v-icon>
+        </v-badge>
+      </v-btn>
+      <!-- <v-btn depressed :style="{background : currentTheme}" right class="ml-1" height="50px">
         <div :style="{background: currentTheme.colorPrimary, 'border-radius': '100%', padding: '2px'}">
           <v-avatar size="27">
             <img
@@ -88,7 +54,7 @@
           </v-overlay>
         </v-toolbar-title>
         <v-icon :style="{color: currentTheme.colorPrimary}">mdi-menu-down</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
     <v-app-bar
       app
@@ -100,7 +66,7 @@
     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     <v-spacer></v-spacer>
     <v-img :src="require('../../../assets/polban.png')" max-width="30" contain class="mr-2"/>
-    <v-toolbar-title style="font-size: 14px">Politeknik Negeri Bandung</v-toolbar-title>
+    <v-toolbar-title style="font-size: 14px" @click="onClickedHome()">Politeknik Negeri Bandung</v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- <v-btn icon @click="notification_click()">
       <v-badge
@@ -115,22 +81,24 @@
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
+      fixed
+      hide-overlay
       width="100%"
       style="margin-top: 48px"
       v-if="$vuetify.breakpoint.mobile"
     >
-          <!-- <v-text-field
+          <v-text-field
             hide-details
-            label="Cari disini"
+            label="Cari di sini"
             append-icon="mdi-magnify"
             class="mx-5 mt-5"
             single-line
             outlined
             dense
             @click:append="search()"
-          ></v-text-field> -->
-          <v-list>
+          ></v-text-field>
+          <v-list
+          >
             <v-list-item class="profile mx-3" two-line>
               <v-list-item-avatar  @click="profil_click()">
                 <v-avatar>
@@ -154,19 +122,15 @@
             </v-list-item>
 
             <v-list-item class="mx-3 profile font-weight-bold">
-              <v-list-item-title>Beranda</v-list-item-title>
+              <v-list-item-title @click="onClickedHome()">Beranda</v-list-item-title>
             </v-list-item>
 
             <v-list-item class="mx-3 profile font-weight-bold">
-              <v-list-item-title>Absensi</v-list-item-title>
+              <v-list-item-title @click="onClickedAbsensi()">Absensi</v-list-item-title>
             </v-list-item>
 
             <v-list-item class="mx-3 profile font-weight-bold">
-              <v-list-item-title>Profil</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item class="mx-3 profile font-weight-bold">
-              <v-list-item-title>Nilai</v-list-item-title>
+              <v-list-item-title @click="onClickedPenilaian()">Penilaian</v-list-item-title>
             </v-list-item>
 
             <v-divider></v-divider>
@@ -190,7 +154,8 @@
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "NavBar",
-  components: { },
+  components: {
+  },
   data () {
     return {
       user: {
@@ -203,12 +168,9 @@ export default {
       group: null,
       darkmode: false,
       toHome: "/home",
-      isLoading: true,
-      selectedItem: 1,
-      items: [
-        { text: "Click Me", icon: "mdi-clock" },
-        { text: "Click Me", icon: "mdi-clock" }
-      ]
+      toAbsensi: "/absensi",
+      toPenilaian: "/penilaian",
+      isLoading: true
     }
   },
   computed: {
@@ -227,7 +189,8 @@ export default {
     }
     Promise.all(tasks).then(result => {
       this.isLoading = false
-      this.user.nama = this.identity.given_name
+      this.user.nama = this.identity.given_name || "User"
+      this.user.nomorInduk = this.identity.preferred_username
     })
   },
   methods: {
@@ -243,16 +206,16 @@ export default {
     search () {
       console.log("Search clicked")
     },
-    isMobile () {
-      return this.$vuetify.breakpoint.xs
-    },
-    isPad () {
-      return this.$vuetify.breakpoint.ms
-    },
     async onClickedHome () {
       if (this.$router.currentRoute.path !== this.toHome) {
         await this.$router.push({ path: this.toHome })
       }
+    },
+    async onClickedAbsensi () {
+      await this.$router.push({ path: this.toAbsensi })
+    },
+    async onClickedPenilaian () {
+      await this.$router.push({ path: this.toPenilaian })
     },
     ...mapActions({
       toogleTheme: "theme/toogleDark"

@@ -30,7 +30,7 @@ import { mapGetters, mapActions } from "vuex"
  */
 const TOKEN_ACCESS_INTERVAL = (1000 * 60 * 60 * 5) - (1000 * 6)
 const initOptions = {
-  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required", checkLoginIframe: false
+  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required"
 }
 export default {
   name: "TemplateMain",
@@ -38,7 +38,7 @@ export default {
     SideBar,
     NavBar
   },
-  created () {
+  async created () {
     // this.sychronize("dani")
     if (!this.$keycloak) {
       this.initKeycloak()
@@ -52,6 +52,11 @@ export default {
       this.isLoading = false
       this.cekUserRoles()
     })
+    if (this.identity.realm_access.roles[0] === "dosen") {
+      await this.$router.push({name: "AbsensiDosen"})
+    } else {
+      await this.$router.push({name: "AbsensiMahasiswa"})
+    }
   },
   data () {
     return {
@@ -61,8 +66,7 @@ export default {
         { text: "Absensi Mahasiswa", icon: "mdi-email-outline", to: "/absensi/mahasiswa/absensi" }
       ],
       sideBarItemsDsn: [
-        { text: "Absensi Dosen Pengampu", icon: "mdi-email-outline", to: "/absensi/dosen/absensi" },
-        { text: "Absensi Dosen Wali", icon: "mdi-email-outline", to: "/absensi/dosen/dosenwali" }
+        { text: "Absensi Dosen", icon: "mdi-email-outline", to: "/absensi/dosen/absensi" },
       ],
       isUserDosen: false
     }
@@ -105,7 +109,7 @@ export default {
       this.isLoading = true
       console.log("Starting")
       try {
-        await keycloak.init({ onLoad: initOptions.onLoad, checkLoginIframe: false })
+        await keycloak.init({ onLoad: initOptions.onLoad })
       } catch (e) {
         console.log(e)
       }

@@ -640,13 +640,13 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "https://www.monitoringtasks.software/*",
-        "https://5262-103-209-131-66.ngrok.io/*",
-        "https://akun.monitoringtasks.software/*",
-        "https://78d0-103-209-131-66.ngrok.io/*"
+        "https://www.akademikpolban.software/*",
+        "ini caddy servernya (Port 2104)",
+        "https://akun.akademikpolban.software/*",
+        "ini FE nya (Port 14415)"
       ],
       "webOrigins": [
-        "https://5262-103-209-131-66.ngrok.io"
+        "ini caddy servernya (Port 2104)"
       ],
       "notBefore": 0,
       "bearerOnly": false,

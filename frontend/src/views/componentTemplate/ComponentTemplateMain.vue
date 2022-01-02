@@ -24,7 +24,7 @@ import SideBar from "@/views/shared/navigation/SideBar"
  */
 const TOKEN_ACCESS_INTERVAL = (1000 * 60 * 60 * 5) - (1000 * 6)
 const initOptions = {
-  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required", checkLoginIframe: false
+  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required"
 }
 export default {
   name: "TemplateMain",
@@ -136,7 +136,7 @@ export default {
       this.isLoading = true
       console.log("Starting")
       try {
-        await keycloak.init({ onLoad: initOptions.onLoad, checkLoginIframe: false })
+        await keycloak.init({ onLoad: initOptions.onLoad })
       } catch (e) {
         console.log(e)
       }

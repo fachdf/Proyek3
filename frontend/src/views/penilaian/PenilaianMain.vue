@@ -24,13 +24,13 @@ import NavBar from "@/views/shared/navigation/NavBar"
 import { mapGetters, mapActions } from "vuex"
 
 /*
-  Token Access interval adalah 5 jam maka
+  Token Access interval adalah 5 jam, maka
   dilakukan perhitungan sebagai berikut :
   1000 (1 seconds) * 60 (1 minute) & 60 (1 hour) * 5
  */
 const TOKEN_ACCESS_INTERVAL = (1000 * 60 * 60 * 5) - (1000 * 6)
 const initOptions = {
-  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required", checkLoginIframe: false
+  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required"
 }
 export default {
   name: "PenilaianMain",
@@ -53,13 +53,13 @@ export default {
       for (var i = 0; i < this.identity.realm_access.roles.length; i++) {
         if (this.identity.realm_access.roles[i] === "mahasiswa") {
           this.sideBarItems = [
-            { text: "Dashboard Nilai Mahasiswa", icon: "mdi-school-outline", to: "/penilaian/dashboard-nilai-mahasiswa" }
+            { text: "Dashboard Nilai Mahasiswa", icon: "mdi-school-outline", to: "/penilaian/dashboard-nilai-mahasiswa", class: "primary white--text title" }
           ]
         }
         if (this.identity.realm_access.roles[i] === "dosen") {
           this.sideBarItems = [
             { text: "Dashboard Nilai Dosen Pengampu", icon: "mdi-school-outline", to: "/penilaian/dashboard-nilai-dosen-pengampu" },
-            { text: "Input Nilai Mahasiswa", icon: "mdi-file-document-outline", to: "/penilaian/input-nilai" }
+            { text: "Daftar Nilai Mahasiswa", icon: "mdi-file-document-outline", to: "/penilaian/input-nilai" }
           ]
         }
       }
@@ -110,7 +110,7 @@ export default {
       this.isLoading = true
       console.log("Starting")
       try {
-        await keycloak.init({ onLoad: initOptions.onLoad, checkLoginIframe: false })
+        await keycloak.init({ onLoad: initOptions.onLoad })
       } catch (e) {
         console.log(e)
       }

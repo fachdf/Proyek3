@@ -1,6 +1,32 @@
 <template>
-  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems" :style="{width : isPad?'3.5rem':'16rem'}">
+  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems">
     <v-list>
+      <v-list-item-content dense class="pl-3">
+        <v-row justify="start" align="center">
+          <v-col cols="2">
+            <v-avatar>
+              <img
+                :src="user.image"
+                alt="John"
+              >
+            </v-avatar>
+          </v-col>
+          <v-col style="color:white" offset="1" justify="center">
+            <p class="ma-0">{{ user.nama }}</p>
+            <p class="ma-0 mt-2">{{ user.nomorInduk }}</p>
+          </v-col>
+        </v-row>
+      </v-list-item-content>
+      <v-list-item-content class="pl-3 pr-3 pb-0">
+        <v-divider style="border-color: #FFFFFF; opacity: 0.5;"></v-divider>
+      </v-list-item-content>
+      <v-list-item-content dense class="pl-3">
+        <v-switch
+          v-model="darkmode"
+          :label="`Dark mode`"
+          dark
+        ></v-switch>
+      </v-list-item-content>
       <div
         v-for="(item, i) in navItem"
         :key="i"
@@ -27,11 +53,11 @@
           dark
         >
           <v-list-item-icon v-if="item.icon">
-            <v-icon color="#DDE2FF">{{ item.icon }}</v-icon>
+            <v-icon color="white">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title v-text="item.text" style="color:#DDE2FF" class="d-none d-sm-none d-md-flex"></v-list-item-title>
+            <v-list-item-title v-text="item.text" style="color:white"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -88,19 +114,13 @@
         text
         block id="logout-button"
         class="font-weight-bold text-uppercase text-button text-left"
-        @click="logout()"
-        :class="{'pl-4': isPad, 'align-center':isPad}"
-        style="color:#797979"
-      >
-        <v-icon medium color="#797979" :class="{'mr-4':!isPad}" style="transform:rotate(180deg)">
-          mdi-logout
-        </v-icon>
-        {{isPad? '' : 'Log out'}}
+        @click="logout()">
+        Log out
       </v-btn>
     </template>
   </v-navigation-drawer>
 </template>
-<style>
+<style scoped>
 #last-item {
   position: absolute;
   bottom: 0;
@@ -122,7 +142,7 @@
 
 </style>
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 export default {
   name: "sideBar",
   props: {
@@ -163,12 +183,24 @@ export default {
     }
   },
   data: () => ({
+    user: {
+      nama: "User",
+      nomorInduk: "",
+
+      image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+    },
     isActive: false,
-    refreshTrigger: false
+    refreshTrigger: false,
+    darkmode: false
   }),
+  created () {
+    this.user.nomorInduk = this.identity.preferred_username
+
+  },
   computed: {
     ...mapGetters({
-      currentTheme: "theme/getCurrentColor"
+      currentTheme: "theme/getCurrentColor",
+      isDark: "theme/getIsDark"
     }),
     navItem () {
       return this.items.map((item) => {
@@ -182,8 +214,8 @@ export default {
         return item
       })
     },
-    isPad () {
-      return this.$vuetify.breakpoint.sm
+    identity: function () {
+      return this.$store.getters.identity
     }
   },
   methods: {
@@ -197,6 +229,16 @@ export default {
       if (this.$router.currentRoute.path !== to) {
         await this.$router.push({ path: to })
       }
+    },
+    ...mapActions({
+      toogleTheme: "theme/toogleDark"
+    }),
+
+  },
+  watch: {
+    darkmode (value) {
+      if (value === this.isDark) return
+      this.toogleTheme("alek")
     }
   }
 }
