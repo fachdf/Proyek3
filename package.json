@@ -1,0 +1,10 @@
+{
+  "name": "@proyek3",
+  "workspaces": [
+    "postgres-database",
+    "backend"
+  ],
+  "devDependencies": {
+    "lint": "^0.7.0"
+  }
+}
