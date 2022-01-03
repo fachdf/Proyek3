@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: "/home",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "akun" */"../views/Home")
   },
   // {
@@ -76,33 +76,33 @@ const routes = [
     // meta: { requiresAuth: true },
     component: () => import("../views/admin/AdminMain"),
     children: [
-   //   {
-    //    path: "/admin",
-     //   // meta: { requiresAuth: true },
-      //  name: "AddNewUser",
-       // component: () =>
-        //  import(
-         //   /* webpackChunkName: "add-new-user-" */ "../views/admin/pages/AddNewUser/AddNewsUserMain.vue"
-         // )
-     // },
-    //  {
-//        path: "/admin/add-user/form",
+      {
+        path: "/admin",
         // meta: { requiresAuth: true },
-//        name: "AddNewUserByForm",
- //       component: () =>
- //         import(
- //           /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByForm.vue"
- //         )
-  //    },
- //     {
-  //      path: "/admin/add-user/excel",
+        name: "AddNewUser",
+        component: () =>
+          import(
+            /* webpackChunkName: "add-new-user-" */ "../views/admin/pages/AddNewUser/AddNewsUserMain"
+          )
+      },
+      {
+        path: "/admin/add-user/form",
         // meta: { requiresAuth: true },
-  //      name: "AddNewUserByExcel",
-   //     component: () =>
-    //      import(
-    //        /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByExcel.vue"
-     //     )
-     // }
+        name: "AddNewUserByForm",
+        component: () =>
+          import(
+            /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByForm"
+          )
+      },
+      {
+        path: "/admin/add-user/excel",
+        // meta: { requiresAuth: true },
+        name: "AddNewUserByExcel",
+        component: () =>
+          import(
+            /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByExcel"
+          )
+      }
     ]
   },
   {
@@ -129,12 +129,12 @@ const routes = [
   },
   {
     path: "/absensi",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
     component: () => import("../views/absensi/AbsensiMain"),
     children: [
       {
         meta: {
-          requiresAuth: false,
+          requiresAuth: true,
           title: "Absensi Mahasiswa"
         },
         path: "/absensi/mahasiswa/absensi",
@@ -146,13 +146,13 @@ const routes = [
       },
       {
         path: "/absensi/dosen/dosenwali",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "NilaiMahasiswa",
         component: () => import(/* webpackChunkName: "absensimahasiswa" */ "../views/absensi/pages/dosen/AbsensiDosenWali")
       },
       {
         path: "/absensi/mahasiswa/upload",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "UploadBukti",
         component: () =>
           import(
@@ -161,7 +161,7 @@ const routes = [
       },
       {
         path: "/absensi/dosen/absensi",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "AbsensiDosen",
         component: () =>
           import(
@@ -358,12 +358,30 @@ const routes = [
         meta: { requiresAuth: true },
         name: "MonitoringDaftarMatkul",
         component: () => import(/* webpackChunkName: "dashboard" */"../views/monitoring/pages/mahasiswa/monitoring/MonitoringMahasiswaDaftarMatKul")
-      }
+      },
+      {
+        path: "/monitoring/wali-dosen/jadwal-mata-kuliah",
+        meta: { requiresAuth: true },
+        name: "JadwalMataKuliah",
+        component: () => import("../views/monitoring/pages/wali-dosen/JadwalMataKuliah")
+      },
       // {
       //   path: "/auth/reset-password",
       //   name: "ResetPassword",
       //   component: () => import(/* webpackChunkName: "add-new-user" */ "../views/auth/pages/resetPassword/ResetPassword")
       // }
+      {
+        path: "/monitoring/wali-dosen/list-mahasiswa",
+        meta: { requiresAuth: true },
+        name: "ListMahasiswa",
+        component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
+      },
+      {
+        path: "/monitoring/wali-dosen/dashboard",
+        meta: { requiresAuth: true },
+        name: "Dashboard",
+        component: () => import("../views/monitoring/pages/wali-dosen/Dashboard")
+      }
     ]
   },
   {
@@ -454,7 +472,7 @@ const routes = [
   },
   {
     path: "/penilaian",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
     component: () => import("../views/penilaian/PenilaianMain"),
     children: [
       {
@@ -467,7 +485,7 @@ const routes = [
       },
       {
         path: "/penilaian/input-nilai-matkul/:id",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Input Nilai Matkul",
         component: () =>
           import(
@@ -477,7 +495,7 @@ const routes = [
       },
       {
         path: "/penilaian/dashboard-nilai-mahasiswa",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Dashboard Nilai Mahasiswa",
         component: () =>
           import(
@@ -486,7 +504,7 @@ const routes = [
       },
       {
         path: "/penilaian/dashboard-nilai-dosen-pengampu",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Dashboard Nilai Section",
         component: () =>
           import(
@@ -495,7 +513,7 @@ const routes = [
       },
       {
         path: "/penilaian/dashboard-nilai-dosen-pengampu/:id",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Dashboard Nilai Dosen Pengampu",
         component: () =>
           import(
@@ -504,7 +522,7 @@ const routes = [
       },
       {
         path: "/penilaian/transkripsi-nilai/:id",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Transkripsi Nilai",
         component: () =>
           import(
