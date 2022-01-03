@@ -19,20 +19,13 @@ const authentication = {
 
   getters: {
     identity: state => {
-      // return state.identity
-      console.log(state.identity)
-      return {
-        realm_access: {
-          roles: ["dosen"]
-        },
-        preferred_username: "199112182019032000"
-      }
+      return state.identity
     }
   },
 
   actions: {
     async authenticate ({ commit }, forceLogin = false) {
-      const auth = await keycloak.init({ onLoad: "login-required" })
+      const auth = await keycloak.init({ onLoad: "login-required", checkLoginIframe: false })
 
       commit("SET_IDENTITY", keycloak.tokenParsed)
 
