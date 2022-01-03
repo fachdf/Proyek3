@@ -507,14 +507,14 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/development/account/",
+      "baseUrl": "/realms/production/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/realms/development/account/*"
+        "/realms/production/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -640,9 +640,7 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "https://www.akademikpolban.software/*",
         "https://1048-103-209-131-66.ngrok.io/*",
-        "https://frontend.akademikpolban.software/*",
         "https://d499-103-209-131-66.ngrok.io/*"
       ],
       "webOrigins": [
