@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npm install --save register-service-worker
+
 COPY . .
 
 RUN npm run build

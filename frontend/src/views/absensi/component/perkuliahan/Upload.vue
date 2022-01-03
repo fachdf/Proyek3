@@ -53,49 +53,49 @@ export default {
   props: {
     multiple: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
       dragover: false,
-      uploadedFiles: [],
-    };
+      uploadedFiles: []
+    }
   },
   methods: {
-    addFile(e) {
+    addFile (e) {
       if (e.target.files.length !== 0) {
         e.target.files.forEach((file) => {
-          this.uploadedFiles.push(file);
-        });
-        this.$emit("updateBukti", this.uploadedFiles);
+          this.uploadedFiles.push(file)
+        })
+        this.$emit("updateBukti", this.uploadedFiles)
       }
     },
-    removeFile(fileName) {
+    removeFile (fileName) {
       // Find the index of the
       const index = this.uploadedFiles.findIndex(
         (file) => file.name === fileName
-      );
+      )
       // If file is in uploaded files remove it
-      if (index > -1) this.uploadedFiles.splice(index, 1);
+      if (index > -1) this.uploadedFiles.splice(index, 1)
     },
-    onDrop(e) {
-      this.dragover = false;
+    onDrop (e) {
+      this.dragover = false
       // If user has uploaded multiple files but the component is not multiple throw error
       if (!this.multiple && e.dataTransfer.files.length > 1) {
         this.$store.dispatch("addNotification", {
           message: "Only one file can be uploaded at a time..",
-          colour: "error",
-        });
+          colour: "error"
+        })
       }
       // Add each file to the array of uploaded files
       else {
         e.dataTransfer.files.forEach((element) =>
           this.uploadedFiles.push(element)
-        );
-        this.$emit("updateBukti", this.uploadedFiles);
+        )
+        this.$emit("updateBukti", this.uploadedFiles)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

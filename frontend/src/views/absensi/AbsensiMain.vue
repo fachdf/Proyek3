@@ -53,9 +53,9 @@ export default {
       this.cekUserRoles()
     })
     if (this.identity.realm_access.roles[0] === "dosen") {
-      await this.$router.push({name: "AbsensiDosen"})
+      await this.$router.push({ name: "AbsensiDosen" })
     } else {
-      await this.$router.push({name: "AbsensiMahasiswa"})
+      await this.$router.push({ name: "AbsensiMahasiswa" })
     }
   },
   data () {
@@ -66,7 +66,7 @@ export default {
         { text: "Absensi Mahasiswa", icon: "mdi-email-outline", to: "/absensi/mahasiswa/absensi" }
       ],
       sideBarItemsDsn: [
-        { text: "Absensi Dosen", icon: "mdi-email-outline", to: "/absensi/dosen/absensi" },
+        { text: "Absensi Dosen", icon: "mdi-email-outline", to: "/absensi/dosen/absensi" }
       ],
       isUserDosen: false
     }

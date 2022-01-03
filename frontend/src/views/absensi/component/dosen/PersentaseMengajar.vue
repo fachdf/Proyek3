@@ -84,58 +84,58 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
-import PersentaseMengajarModal from "./PersentaseMengajarModal.vue";
+import { mapGetters } from "vuex"
+import PersentaseMengajarModal from "./PersentaseMengajarModal.vue"
 
 export default {
   name: "PersentaseMengajar",
   components: {
-    PersentaseMengajarModal,
+    PersentaseMengajarModal
   },
-  data() {
+  data () {
     return {
       persenTidakMengajar: 0,
       items: [
         {
           matkul: "PCD TE",
-          percent: "60",
+          percent: "60"
         },
         {
           matkul: "PCD TE",
-          percent: "60",
+          percent: "60"
         },
         {
           matkul: "PCD TE",
-          percent: "60",
+          percent: "60"
         },
         {
           matkul: "PCD TE",
-          percent: "60",
+          percent: "60"
         },
         {
           matkul: "PCD TE",
-          percent: "60",
+          percent: "60"
         },
         {
           matkul: "PCD TE",
-          percent: "60",
-        },
-      ],
-    };
+          percent: "60"
+        }
+      ]
+    }
   },
   props: {
     persentaseMengajar: {
       type: Object,
-      default() {
-        return {};
-      },
-    },
+      default () {
+        return {}
+      }
+    }
   },
 
   computed: {
     ...mapGetters({
-      currentTheme: "theme/getCurrentColor",
-    }),
-  },
-};
+      currentTheme: "theme/getCurrentColor"
+    })
+  }
+}
 </script>

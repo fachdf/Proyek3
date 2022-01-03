@@ -1,4 +1,4 @@
-import Dosen from '../models/Dosen.js'
+import Dosen from '../models/dosen.js'
 import sequelize from '../db.js'
 
 // new Method From 19

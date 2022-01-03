@@ -1,4 +1,4 @@
-import Mahasiswa from '../models/Mahasiswa'
+import Mahasiswa from '../models/mahasiswa'
 import sequelize from '../db.js'
 
 // new Method From 19

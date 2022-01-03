@@ -76,33 +76,33 @@ const routes = [
     // meta: { requiresAuth: true },
     component: () => import("../views/admin/AdminMain"),
     children: [
-      {
-        path: "/admin",
+   //   {
+    //    path: "/admin",
+     //   // meta: { requiresAuth: true },
+      //  name: "AddNewUser",
+       // component: () =>
+        //  import(
+         //   /* webpackChunkName: "add-new-user-" */ "../views/admin/pages/AddNewUser/AddNewsUserMain.vue"
+         // )
+     // },
+    //  {
+//        path: "/admin/add-user/form",
         // meta: { requiresAuth: true },
-        name: "AddNewUser",
-        component: () =>
-          import(
-            /* webpackChunkName: "add-new-user-" */ "../views/admin/pages/AddNewUser/AddNewsUserMain"
-          )
-      },
-      {
-        path: "/admin/add-user/form",
+//        name: "AddNewUserByForm",
+ //       component: () =>
+ //         import(
+ //           /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByForm.vue"
+ //         )
+  //    },
+ //     {
+  //      path: "/admin/add-user/excel",
         // meta: { requiresAuth: true },
-        name: "AddNewUserByForm",
-        component: () =>
-          import(
-            /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByForm"
-          )
-      },
-      {
-        path: "/admin/add-user/excel",
-        // meta: { requiresAuth: true },
-        name: "AddNewUserByExcel",
-        component: () =>
-          import(
-            /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByExcel"
-          )
-      }
+  //      name: "AddNewUserByExcel",
+   //     component: () =>
+    //      import(
+    //        /* webpackChunkName: "add-new-user-by-form" */ "../views/admin/pages/AddNewUser/AddNewUserByExcel.vue"
+     //     )
+     // }
     ]
   },
   {

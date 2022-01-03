@@ -195,7 +195,6 @@ export default {
   }),
   created () {
     this.user.nomorInduk = this.identity.preferred_username
-
   },
   computed: {
     ...mapGetters({
@@ -232,7 +231,7 @@ export default {
     },
     ...mapActions({
       toogleTheme: "theme/toogleDark"
-    }),
+    })
 
   },
   watch: {

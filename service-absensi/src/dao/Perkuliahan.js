@@ -1,4 +1,4 @@
-import Perkuliahan from '../models/Perkuliahan'
+import Perkuliahan from '../models/perkuliahan'
 import db from '../db'
 
 export const findPerkuliahanByIdPerkuliahan = async (idPerkuliahan) => {

@@ -78,50 +78,50 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
 
-const ONE_HOURS = 1000 * 60 * 60;
+const ONE_HOURS = 1000 * 60 * 60
 
 export default {
-  created() {
-    var current = new Date();
-    this.currentDay = current.getDay();
+  created () {
+    var current = new Date()
+    this.currentDay = current.getDay()
     setInterval(() => {
-      current = new Date();
-      this.currentDay = current.getDay();
-    }, ONE_HOURS);
+      current = new Date()
+      this.currentDay = current.getDay()
+    }, ONE_HOURS)
 
-    this.currentTime = current.getHours() + ":" + current.getMinutes();
-    this.currentHour = current.getHours();
-    this.currentHour = ("0" + this.currentHour).slice(-2);
+    this.currentTime = current.getHours() + ":" + current.getMinutes()
+    this.currentHour = current.getHours()
+    this.currentHour = ("0" + this.currentHour).slice(-2)
     setInterval(() => {
-      current = new Date();
-      this.currentHour = current.getHours();
-      this.currentHour = ("0" + this.currentHour).slice(-2);
-    }, 1000);
-    this.currentMinute = current.getMinutes();
-    this.currentMinute = ("0" + this.currentMinute).slice(-2);
+      current = new Date()
+      this.currentHour = current.getHours()
+      this.currentHour = ("0" + this.currentHour).slice(-2)
+    }, 1000)
+    this.currentMinute = current.getMinutes()
+    this.currentMinute = ("0" + this.currentMinute).slice(-2)
     setInterval(() => {
-      current = new Date();
-      this.currentMinute = current.getMinutes();
-      this.currentMinute = ("0" + this.currentMinute).slice(-2);
-    }, 1000);
+      current = new Date()
+      this.currentMinute = current.getMinutes()
+      this.currentMinute = ("0" + this.currentMinute).slice(-2)
+    }, 1000)
   },
-  data() {
+  data () {
     return {
       currentTime: "",
       currentHour: "",
       currentMinute: "",
       currentDay: null
-    };
+    }
   },
   name: "LogAktivitasDosen",
 
   props: {
     jadwalDsn: {
       type: Array,
-      default() {
-        return {};
+      default () {
+        return {}
       }
     }
   },
@@ -129,32 +129,32 @@ export default {
     ...mapGetters({
       currentTheme: "theme/getCurrentColor"
     }),
-    getDay() {
+    getDay () {
       switch (this.currentDay) {
         case 1:
-          var currentDay = "Senin";
-          break;
+          var currentDay = "Senin"
+          break
         case 2:
-          currentDay = "Selasa";
-          break;
+          currentDay = "Selasa"
+          break
         case 3:
-          currentDay = "Rabu";
-          break;
+          currentDay = "Rabu"
+          break
         case 4:
-          currentDay = "Kamis";
-          break;
+          currentDay = "Kamis"
+          break
         case 5:
-          currentDay = "Jumat";
-          break;
+          currentDay = "Jumat"
+          break
         case 6:
-          currentDay = "Sabtu";
-          break;
+          currentDay = "Sabtu"
+          break
         case 0:
-          currentDay = "Minggu";
-          break;
+          currentDay = "Minggu"
+          break
       }
-      return currentDay;
+      return currentDay
     }
   }
-};
+}
 </script>

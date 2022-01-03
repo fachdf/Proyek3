@@ -42,15 +42,15 @@
 </template>
 
 <script>
-import Dialog from "./DialogKetidakhadiran.vue";
-import Keterangan from "@/datasource/network/absensi/keterangan";
+import Dialog from "./DialogKetidakhadiran.vue"
+import Keterangan from "@/datasource/network/absensi/keterangan"
 
 export default {
   components: { Dialog },
-  data() {
+  data () {
     return {
       dialogs: {
-        dialog: false,
+        dialog: false
       },
       dataMhs: [],
       mahasiswa: [],
@@ -59,42 +59,42 @@ export default {
       page: 1,
       perPage: 3,
       pages: [],
-      length: 0,
-    };
+      length: 0
+    }
   },
   methods: {
-    openDialog(mhs) {
-      this.dataMhs = mhs;
-      this.dialogs.dialog = true;
+    openDialog (mhs) {
+      this.dataMhs = mhs
+      this.dialogs.dialog = true
     },
-    onClickChild(value) {
-      this.getKeterangan();
+    onClickChild (value) {
+      this.getKeterangan()
     },
-    getKeterangan() {
+    getKeterangan () {
       Keterangan.getKeterangan(this.kelas)
         .then((response) => {
-          this.ketidakhadiran = response.data;
-          this.getMhsIzin();
+          this.ketidakhadiran = response.data
+          this.getMhsIzin()
         })
         .catch((e) => {
-          console.log(e);
-        });
+          console.log(e)
+        })
     },
-    getMhsIzin() {
-      this.mahasiswa = [];
+    getMhsIzin () {
+      this.mahasiswa = []
       for (var i = 0; i < this.ketidakhadiran.mhs_izin.length; i++) {
         if (this.ketidakhadiran.mhs_izin[i].keterangans[0].isAccepted === -1) {
-          this.mahasiswa.push(this.ketidakhadiran.mhs_izin[i]);
+          this.mahasiswa.push(this.ketidakhadiran.mhs_izin[i])
         }
       }
-      this.length = this.mahasiswa.length;
-    },
+      this.length = this.mahasiswa.length
+    }
   },
-  beforeMount() {
-    this.getKeterangan();
-    this.getMhsIzin();
-  },
-};
+  beforeMount () {
+    this.getKeterangan()
+    this.getMhsIzin()
+  }
+}
 </script>
 <style scoped>
 p {

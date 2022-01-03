@@ -1,4 +1,4 @@
-authtoken: 21xMlvazvvT69odZLCWdLQumNUI_2FmHBx34YDJSwgUUs1N4G 
+authtoken: 238jZKSIpccsdqnrHDqECffoQhC_7ViRQpSEJq2ZjB7H4suyF 
 tunnels:
   keycloak-proxy:
     addr: 2104
@@ -10,10 +10,6 @@ tunnels:
     bind_tls: true
   frontend:
     addr: 14415
-    proto: http
-    bind_tls: true
-  monitoring:
-    addr: 5001
     proto: http
     bind_tls: true
 

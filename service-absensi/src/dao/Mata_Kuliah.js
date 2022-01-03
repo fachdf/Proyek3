@@ -1,4 +1,4 @@
-import MataKuliah from '../models/Mata_Kuliah'
+import MataKuliah from '../models/mata_kuliah'
 
 export const findMataKuliahByIdMatkul = async (idMataKuliah) => {
   try {

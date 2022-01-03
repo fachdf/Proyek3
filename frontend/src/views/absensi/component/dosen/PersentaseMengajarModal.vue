@@ -57,36 +57,36 @@ export default {
   name: "PersentaseMengajarModal",
   props: {
     matakuliah: {
-      type: String,
-    },
+      type: String
+    }
   },
-  data() {
+  data () {
     return {
       headers: [
         {
           text: "Pertemuan Ke-",
           align: "center",
           sortable: false,
-          value: "pertemuan",
+          value: "pertemuan"
         },
         {
           text: "Tanggal",
           align: "center",
           sortable: false,
-          value: "tanggal",
+          value: "tanggal"
         },
         {
           text: "Status Pengisisan Bap",
           align: "center",
           sortable: false,
-          value: "bap",
+          value: "bap"
         },
         {
           text: "Status Kehadiran",
           align: "center",
           sortable: false,
-          value: "kehadiran",
-        },
+          value: "kehadiran"
+        }
       ],
       items: [
         {
@@ -124,11 +124,11 @@ export default {
           tanggal: Date.now(),
           bap: true,
           kehadiran: true
-        },
+        }
       ]
-    };
-  },
-};
+    }
+  }
+}
 </script>
 
 <style>

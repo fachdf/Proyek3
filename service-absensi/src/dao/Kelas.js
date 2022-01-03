@@ -1,4 +1,4 @@
-import Kelas from '../models/Kelas'
+import Kelas from '../models/kelas'
 
 export const findKelasByKodeKelas = async (kodeKelas) => {
   try {

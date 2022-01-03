@@ -96,7 +96,7 @@ export default {
       data: [],
       mahasiswa: [],
       radios: true,
-      editFlag: false,
+      editFlag: false
     }
   },
   methods: {
@@ -107,7 +107,7 @@ export default {
           this.mahasiswa = this.data.mahasiswa
         })
         .catch(e => {
-          console.log(this.perkuliahan);
+          console.log(this.perkuliahan)
           console.log(e)
         })
     },
@@ -121,7 +121,7 @@ export default {
         })
     },
     toogleEdit () {
-      this.editFlag = !this.editFlag;
+      this.editFlag = !this.editFlag
     }
   },
   computed: {

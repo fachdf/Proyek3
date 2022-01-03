@@ -3,10 +3,10 @@ import upload from '../middleware/upload'
 import * as MahasiswaServices from '../services/Mahasiswa'
 import * as DosenServices from '../services/Dosen'
 import * as DaftarHadirMahasiwaServices from '../services/DaftarHadirMahasiswa'
-import modelMhs from '../../../postgres-database/src/models/Mahasiswa'
-import modelKelas from '../../../postgres-database/src/models/Kelas'
+import modelMhs from '../models/mahasiswa'
+import modelKelas from '../models/kelas'
 import modelJadwal from '../models/Jadwal'
-import modelTU from '../../../postgres-database/src/models/Tata_Usaha'
+import modelTU from '../models/Tata_Usaha'
 import axios from 'axios'
 
 export const getSuratIzin = (req, res) => {

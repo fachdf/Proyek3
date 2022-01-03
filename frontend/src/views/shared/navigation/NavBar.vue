@@ -26,7 +26,7 @@
         outlined
         dense
         @click:append="notification_click"
-      ></v-text-field> 
+      ></v-text-field>
       <v-btn class="ml-2" icon @click="notification_click()">
         <v-badge
           :content="usernotif"

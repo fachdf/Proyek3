@@ -1,6 +1,6 @@
 export default class DateTime {
   static getDay (currentDayNum) {
-    let currentDayString;
+    let currentDayString
     switch (currentDayNum) {
       case 1:
         currentDayString = "Senin"

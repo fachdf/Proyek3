@@ -148,67 +148,67 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
-import Upload from "@/views/absensi/component/perkuliahan/Upload";
-import kehadiran from "@/datasource/network/absensi/perkuliahan";
-import bapApi from "@/datasource/network/absensi/bap";
+import { mapGetters } from "vuex"
+import Upload from "@/views/absensi/component/perkuliahan/Upload"
+import kehadiran from "@/datasource/network/absensi/perkuliahan"
+import bapApi from "@/datasource/network/absensi/bap"
 
 export default {
   props: {
     perkuliahan: {
       type: Array,
-      default() {
-        return {};
-      },
-    },
+      default () {
+        return {}
+      }
+    }
   },
-  data() {
+  data () {
     return {
       materi: "",
       kegiatan: [
         {
-          value: "",
-        },
+          value: ""
+        }
       ],
       tempKegiatan: ["Alex pusing", "Salman bingung", "Faza tidur"],
       buktiKuliah: [],
       kehadiranMhs: [],
       currentDate: new Date().toISOString().substr(0, 10),
-      statusBAP: true,
-    };
+      statusBAP: true
+    }
   },
   methods: {
-    updateBuktiKuliah(value) {
-      this.buktiKuliah = value;
+    updateBuktiKuliah (value) {
+      this.buktiKuliah = value
     },
-    async getKehadiran() {
+    async getKehadiran () {
       try {
         const response = await kehadiran.getKehadiranMhs(
           this.perkuliahan.kelas.kode_kelas,
           this.perkuliahan.id_jadwal,
           this.currentDate
-        );
-        this.kehadiranMhs = response.data.mahasiswa;
+        )
+        this.kehadiranMhs = response.data.mahasiswa
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    addKegiatan() {
-      this.kegiatan.push({ value: "" });
+    addKegiatan () {
+      this.kegiatan.push({ value: "" })
     },
-    removeKegiatan() {
-      this.kegiatan.pop();
+    removeKegiatan () {
+      this.kegiatan.pop()
     },
-    async submitBAP() {
-      await this.getKehadiran();
+    async submitBAP () {
+      await this.getKehadiran()
 
       const hadir = this.kehadiranMhs.filter(
         (item) => item.isHadir === true
-      ).length;
-      const tidak_hadir = this.kehadiranMhs.length - hadir;
+      ).length
+      const tidak_hadir = this.kehadiranMhs.length - hadir
 
-      const fileData = new FormData();
-      fileData.append("file", this.buktiKuliah[0]);
+      const fileData = new FormData()
+      fileData.append("file", this.buktiKuliah[0])
 
       const BAP = {
         nip: this.identity.preferred_username,
@@ -216,32 +216,32 @@ export default {
         tanggal: this.currentDate,
         materi: this.materi,
         kegiatan: this.kegiatan.map((item) => {
-          return item.value;
+          return item.value
         }),
         // NOT WORKING, IDK WHY
         bukti: this.buktiKuliah[0],
         hadir,
-        tidak_hadir,
-      };
-
-      console.log(BAP);
-      try {
-        const response = await bapApi.postBAP(BAP);
-      } catch (error) {
-        console.log(error);
+        tidak_hadir
       }
-    },
+
+      console.log(BAP)
+      try {
+        const response = await bapApi.postBAP(BAP)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   },
   components: {
-    Upload,
+    Upload
   },
   computed: {
     ...mapGetters({
-      currentTheme: "theme/getCurrentColor",
+      currentTheme: "theme/getCurrentColor"
     }),
     identity: function () {
-      return this.$store.getters.identity;
-    },
-  },
-};
+      return this.$store.getters.identity
+    }
+  }
+}
 </script>
