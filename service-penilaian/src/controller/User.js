@@ -1,8 +1,10 @@
-// import { insertOneDosen } from '../dao/Dosen'
+import { insertOneDosen } from '../dao/Dosen'
 import { insertOneMahasiswa } from '../dao/Mahasiswa'
-import { validationResult } from 'express-validator/check'
+import expressValidator from 'express-validator/check'
+const { validationResult } = expressValidator
 import { getAdminClient, adminAuth } from '../config/keycloak-admin'
-import { uuid } from 'uuidv4'
+import uuIdv4 from 'uuidv4';
+const { uuid } = uuIdv4;
 
 export const createUser = async (req, res, next) => {
   try {
@@ -64,6 +66,7 @@ export const createUser = async (req, res, next) => {
     result.dataValues.tempPwdKc = tempPassword
 
     res.status(200).json({
+      status: res.statusCode,
       message: 'insert user sukses',
       data: result
     })
@@ -101,6 +104,7 @@ export const getAllUser = async (req, res, next) => {
     }
 
     res.status(200).json({
+      status: res.statusCode,
       message: 'Success retrieve all user data',
       data: resultFiltered.slice((page - 1) * perPage, page * perPage)
     })

@@ -3,26 +3,15 @@ import * as MahasiswaController from '../controller/Mahasiswa'
 import * as ValidatorSanitizer from '../middleware/InputValidatorSanitizer'
 
 const router = express.Router()
-router.post(
-  '/new-mahasiswa',
-  ValidatorSanitizer.postNewMahasiswa,
-  MahasiswaController.postNewMahasiswa
-)
-router.put(
-  '/updatePhone-mahasiswa/:NIM',
-  ValidatorSanitizer.updateNomorHpMahasiswa,
-  MahasiswaController.updateNomorHpMahasiswa
-)
-router.delete(
-  '/delete-mahasiswaById/:id_mahasiswa',
-  MahasiswaController.deleteMahasiswabyId
-)
+
+router.post('/new-mahasiswa', ValidatorSanitizer.postNewMahasiswa, MahasiswaController.postNewMahasiswa)
+router.put('/updatePhone-mahasiswa/:NIM', ValidatorSanitizer.updateNomorHpMahasiswa, MahasiswaController.updateNomorHpMahasiswa)
+router.delete('/delete-mahasiswaByNIM/:NIM', MahasiswaController.deleteMahasiswabyId)
 router.get('/AllMahasiswa', MahasiswaController.getAllMahasiswa)
 router.get('/getOne/:NIM', MahasiswaController.getOneMahasiswaByNIM)
 router.get('/searchByName/:nama', MahasiswaController.searchMahasiswaByName)
 router.get('/searchByNIM/:NIM', MahasiswaController.searchMahasiswaByNIM)
-router.get('/searchByClass/:Class', MahasiswaController.searchMahasiswaByClass)
-// router.get('/:kode_kelas', MahasiswaController.getMahasiswaByKelas)
-router.get('/getRekapSubtugasMahasiswaById/:NIM', MahasiswaController.getRekapSubtugasMahasiswaById)
-router.get('/getProgressSubtugasMahasiswaByNIM/:NIM', MahasiswaController.getProgressSubtugasByNIM)
+
+router.get('/perkuliahan/:id_perkuliahan', MahasiswaController.getMahasiswaByPerkuliahan)
+
 export default router

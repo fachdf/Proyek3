@@ -1,18 +1,18 @@
 import * as MahasiswaDAO from '../dao/Mahasiswa'
-import { validationResult } from 'express-validator/check'
+import * as StudiDAO from '../dao/Studi'
+import expressValidator from 'express-validator/check'
+import Mahasiswa from '../models/Mahasiswa'
+const { validationResult } = expressValidator
 
 export const postNewMahasiswa = async (req, res, next) => {
   try {
     const {
       NIM,
       namaMahasiswa,
-      angkatan,
-      tingkat,
+      kodeKelas,
       email,
       nomorHp,
-      urlFoto,
-      status,
-      username
+      urlFoto
     } = req.body
     const error = validationResult(req)
 
@@ -24,13 +24,10 @@ export const postNewMahasiswa = async (req, res, next) => {
     const mahasiswa = await MahasiswaDAO.insertOneMahasiswa(
       NIM,
       namaMahasiswa,
-      parseInt(angkatan),
-      parseInt(tingkat),
+      parseInt(kodeKelas),
       email,
       nomorHp,
-      urlFoto,
-      status,
-      username
+      urlFoto
     )
 
     if (typeof mahasiswa === 'undefined') {
@@ -40,6 +37,7 @@ export const postNewMahasiswa = async (req, res, next) => {
     }
 
     res.status(200).json({
+      status: res.statusCode,
       message: 'insert mahasiswa sukses',
       data: {
         mahasiswa
@@ -57,6 +55,7 @@ export const updateNomorHpMahasiswa = async (req, res, next) => {
     if (updateMahasiswa === 1) {
       const mahasiswa = await MahasiswaDAO.findMahasiswaByNIM(NIM)
       res.status(200).json({
+        status: res.statusCode,
         message: 'Update Nomor HP Mahasiswa berhasil',
         data: {
           mahasiswa
@@ -75,10 +74,11 @@ export const updateNomorHpMahasiswa = async (req, res, next) => {
 
 export const deleteMahasiswabyId = async (req, res, next) => {
   try {
-    const mahasiswaId = req.params.id_mahasiswa
+    const mahasiswaId = req.params.NIM
     const result = await MahasiswaDAO.deleteMahasiswabyId(mahasiswaId)
     if (result === 1) {
       res.status(200).json({
+        status: res.statusCode,
         message: 'Delete mahasiswa berhasil',
         data: {
           mahasiswaId
@@ -98,6 +98,7 @@ export const getAllMahasiswa = async (req, res, next) => {
   try {
     const mahasiswa = await MahasiswaDAO.findAllMahasiswa()
     res.status(200).json({
+      status: res.statusCode,
       message: 'get all mahasiswa success',
       data: {
         mahasiswa
@@ -113,6 +114,7 @@ export const getOneMahasiswaByNIM = async (req, res, next) => {
     const { NIM } = req.params
     const mahasiswa = await MahasiswaDAO.findOneMahasiswaByNIM(NIM)
     res.status(200).json({
+      status: res.statusCode,
       message: 'get one Mahasiswa by NIM success',
       data: {
         mahasiswa
@@ -128,6 +130,7 @@ export const searchMahasiswaByName = async (req, res, next) => {
     const { nama } = req.params
     const mahasiswa = await MahasiswaDAO.findMahasiswaByName(nama)
     res.status(200).json({
+      status: res.statusCode,
       message: 'find Mahasiswa by name success',
       data: {
         mahasiswa
@@ -143,6 +146,7 @@ export const searchMahasiswaByNIM = async (req, res, next) => {
     const { NIM } = req.params
     const mahasiswa = await MahasiswaDAO.findMahasiswaByNIM(NIM)
     res.status(200).json({
+      status: res.statusCode,
       message: 'find Mahasiswa by NIM success',
       data: {
         mahasiswa
@@ -153,60 +157,24 @@ export const searchMahasiswaByNIM = async (req, res, next) => {
   }
 }
 
-export const searchMahasiswaByClass = async (req, res, next) => {
+export const getMahasiswaByPerkuliahan = async (req, res, next) => {
   try {
-    const { kode_kelas } = req.params
-    const mahasiswa = await MahasiswaDAO.findMahasiswaByClass(kode_kelas)
-    res.status(200).json({
-      message: 'find Mahasiswa by class success',
-      data: {
-        mahasiswa
-      }
-    })
-  } catch (error) {
-    next(error)
-  }
-}
+    const idPerkuliahan = req.params.id_perkuliahan
 
-export const getRekapSubtugasMahasiswaById = async (req, res, next) => {
-  try {
-    const { NIM } = req.params
-    const rekapTugas = await MahasiswaDAO.getRekapSubtugasById(NIM)
-    res.status(200).json({
-      message: 'get rekap subtugas Mahasiswa by Id success',
-      data: {
-        rekapTugas
-      }
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
-export const getProgressSubtugasByNIM = async (req, res, next) => {
-  try {
-    const { NIM } = req.params;
-    const startDuration = new Date(req.query.start);
-    const endDuration = new Date(req.query.end);
-    var progressSubtugas = [];
-
-    var incrementDate = new Date(req.query.start)
-    incrementDate.setDate(incrementDate.getDate() + 7);
-    while (incrementDate.getTime() < endDuration.getTime()) {
-      const tugasselesai = await MahasiswaDAO.getTugasSelesaiByNIM(NIM, startDuration, incrementDate);
-      const alltugas = await MahasiswaDAO.getSemuaTugasByNIM(NIM, startDuration, incrementDate);
-
-      const progress = tugasselesai[0] == undefined ? 0 : (tugasselesai[0].jml_tugas / alltugas[0].jml_tugas);
-      progressSubtugas.push(progress);
-
-      // add date to next week
-      incrementDate.setDate(incrementDate.getDate() + 7);
+    const studi = await StudiDAO.findStudiByIdPerkuliahan(idPerkuliahan);
+    var listIdMahasiswa = []
+    var i
+    var j
+    for (i = 0; i < studi.length; i++) {
+      var idMahasiswa = studi[i].id_mahasiswa
+      listIdMahasiswa.push(idMahasiswa)
     }
-    
+    const mahasiswaPerkuliahan = await MahasiswaDAO.findMahasiswaCriteriaNIM(listIdMahasiswa)
     res.status(200).json({
-      message: 'get progress subtugas Mahasiswa by Id success',
+      status: res.statusCode,
+      message: 'get matkul by dosen sukses',
       data: {
-        progressSubtugas
+        mahasiswaPerkuliahan
       }
     })
   } catch (error) {
