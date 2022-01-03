@@ -1,0 +1,10 @@
+authtoken: 238iycuSWBofJGmWzRXfIrOXtnw_3JpNHw2cdApFp32BhNPob 
+tunnels:
+  penilaian:
+    addr: 5002
+    proto: http
+    bind_tls: true
+  absensi:
+    addr: 5001
+    proto: http
+    bind_tls: true

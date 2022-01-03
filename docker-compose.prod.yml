@@ -49,7 +49,7 @@ services:
     environment:
       KEYCLOAK_USER: proyek3
       KEYCLOAK_PASSWORD: proyek3
-      KEYCLOAK_FRONTEND_URL: https://1c8b-103-209-131-66.ngrok.io/keycloak-proxy/auth
+      KEYCLOAK_FRONTEND_URL: https://1048-103-209-131-66.ngrok.io/keycloak-proxy/auth
       KEYCLOAK_IMPORT: /tmp/realm.json
       DB_VENDOR: postgres
       DB_ADDR: db
@@ -91,15 +91,3 @@ services:
     depends_on:
       - db
       - keycloak
-  postgres-database:
-    image: postgres-database
-    build:
-      context: ./postgres-database
-      dockerfile: prod.Dockerfile
-    volumes:
-      - ./postgres-database:/usr/src/app
-      - /usr/src/app/node_modules
-    networks:
-            - default
-    depends_on:
-            - db

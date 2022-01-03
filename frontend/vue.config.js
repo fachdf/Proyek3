@@ -4,8 +4,8 @@ module.exports = {
     allowedHosts: [
       "akun.localhost",
       "frontend.localhost",
-      "9bee-103-209-131-66.ngrok.io",
-      "1c8b-103-209-131-66.ngrok.io"
+      "d499-103-209-131-66.ngrok.io",
+      "1048-103-209-131-66.ngrok.io"
     ]
   },
   transpileDependencies: [

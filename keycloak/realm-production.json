@@ -472,7 +472,7 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/development/account/*"
+        "/realms/production/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -633,20 +633,20 @@
     {
       "id": "e7060b8f-0b4b-4796-98b7-07654dc3f8a3",
       "clientId": "public",
-      "rootUrl": "https://1c8b-103-209-131-66.ngrok.io",
-      "adminUrl": "https://1c8b-103-209-131-66.ngrok.io",
+      "rootUrl": "https://1048-103-209-131-66.ngrok.io",
+      "adminUrl": "https://1048-103-209-131-66.ngrok.io",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
         "https://www.akademikpolban.software/*",
-        "https://1c8b-103-209-131-66.ngrok.io/*",
-        "https://akun.akademikpolban.software/*",
-        "https://9bee-103-209-131-66.ngrok.io/*"
+        "https://1048-103-209-131-66.ngrok.io/*",
+        "https://frontend.akademikpolban.software/*",
+        "https://d499-103-209-131-66.ngrok.io/*"
       ],
       "webOrigins": [
-        "https://1c8b-103-209-131-66.ngrok.io"
+        "https://1048-103-209-131-66.ngrok.io"
       ],
       "notBefore": 0,
       "bearerOnly": false,

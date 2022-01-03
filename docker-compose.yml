@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: proyek3
+      POSTGRES_PASSWORD: proyek3
+      POSTGRES_DB: proyek3
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+    volumes:
+      - ./.tmp/var/lib/postgresql/data:/var/lib/postgresql/data
+      - ./postgres-database/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+  service-absensi:
+    image: service-absensi
+    build:
+      context: ./service-absensi
+      target: production
+      dockerfile: prod.Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./service-absensi:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    depends_on:
+      - db
+  service-penilaian:
+    image: service-penilaian
+    build:
+      context: ./service-penilaian
+      target: production
+      dockerfile: prod.Dockerfile
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./service-penilaian:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    depends_on:
+      - db
