@@ -412,7 +412,7 @@ import DosenAPI from "@/datasource/network/penilaian/PenilaianDosen"
 export default {
   name: "AbsensiDosenMain",
   components: { Breadcumbs },
-  data () {
+  data() {
     return {
       breadcrumbItems: [
         {
@@ -811,33 +811,33 @@ export default {
           Nilai: [86, 53, 97, 75, 47]
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapGetters({
       currentTheme: "theme/getCurrentColor"
     }),
-    isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+    isMobile() {
+      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
     },
-    identity: function () {
-      return this.$store.getters.identity
+    identity: function() {
+      return this.$store.getters.identity;
     },
-    itemsWithIndex () {
+    itemsWithIndex() {
       return this.desserts.map((desserts, index) => ({
         ...desserts,
         index: index + 1
-      }))
+      }));
     }
   },
   methods: {
-    async getMatkulbyKelas (kodeKelas, index) {
+    async getMatkulbyKelas(kodeKelas, index) {
       // console.log(kodeKelas)
-      const matkul = await DosenAPI.getMatkul(this.nip, kodeKelas.kode_kelas)
-      this.id_perkuliahan = matkul.id_perkuliahan
-      this.listMatkul = matkul.listMatkul
+      const matkul = await DosenAPI.getMatkul(this.nip, kodeKelas.kode_kelas);
+      this.id_perkuliahan = matkul.id_perkuliahan;
+      this.listMatkul = matkul.listMatkul;
     },
-    routeNilaiMatkul (id, matkul) {
+    routeNilaiMatkul(id, matkul) {
       // this.$router.push({ path: "input-nilai-matkul/" + id, params: { namaMatkul: matkul } })
       this.$router.push({
         name: "Input Nilai Matkul",
@@ -846,60 +846,60 @@ export default {
           id: id,
           namaMatkul: matkul
         }
-      })
+      });
     },
-    filterMatakuliah (val) {
+    filterMatakuliah(val) {
       // If this filter has no value we just skip the entire filter.
       if (!this.MataKuliahFilterValue) {
-        return true
+        return true;
       }
       // Check if the current loop value (The calories value)
       // equals to the selected value at the <v-select>.
-      return val === this.MataKuliahFilterValue
+      return val === this.MataKuliahFilterValue;
     },
-    filterKelas (val) {
+    filterKelas(val) {
       // If this filter has no value we just skip the entire filter.
       if (!this.KelasFilterValue) {
-        return true
+        return true;
       }
       // Check if the current loop value (The calories value)
       // equals to the selected value at the <v-select>.
-      return val === this.KelasFilterValue
+      return val === this.KelasFilterValue;
     },
-    filterSemester (val) {
+    filterSemester(val) {
       // If this filter has no value we just skip the entire filter.
       if (!this.SemesterFilterValue) {
-        return true
+        return true;
       }
       // Check if the current loop value (The calories value)
       // equals to the selected value at the <v-select>.
-      return val === this.SemesterFilterValue
+      return val === this.SemesterFilterValue;
     },
-    filterTahun (val) {
+    filterTahun(val) {
       // If this filter has no value we just skip the entire filter.
       if (!this.TahunFilterValue) {
-        return true
+        return true;
       }
       // Check if the current loop value (The calories value)
       // equals to the selected value at the <v-select>.
-      return val === this.TahunFilterValue
+      return val === this.TahunFilterValue;
     },
-    tambahKategori (type) {
-      this.dialogKategori = true
+    tambahKategori(type) {
+      this.dialogKategori = true;
       if (type === "ETS") {
         // this.headerParentNilaiETS.push({ bobot: 0, colspan: 1, key: "didnot", label: "Test kategori" })
-        this.parentKategori = this.headerParentNilaiETS
-        this.newKategori.type = "ETS"
+        this.parentKategori = this.headerParentNilaiETS;
+        this.newKategori.type = "ETS";
         // console.log("haloo")
         // console.log(this.headerParentNilaiETS)
       } else {
-        this.parentKategori = this.headerParentNilaiEAS
-        this.newKategori.type = "EAS"
+        this.parentKategori = this.headerParentNilaiEAS;
+        this.newKategori.type = "EAS";
         // console.log("halo eas")
       }
     },
-    saveKategori () {
-      var mahasiswa
+    saveKategori() {
+      var mahasiswa;
       if (this.newKategori.parent === "") {
         if (this.newKategori.type === "ETS") {
           this.headerParentNilaiETS.push({
@@ -907,19 +907,19 @@ export default {
             colspan: 1,
             key: "ETS-newKategori",
             bobot: 0
-          })
+          });
           this.headerChildNilaiETS.push({
             label: "Tugas 1",
             colspan: 1,
             key: "ETS-" + this.newKategori.nama_kategori + "-Tugas 1",
             bobot: 0
-          })
+          });
           for (
             mahasiswa = 0;
             mahasiswa < this.dataNilaiMahasiswaETS.length;
             mahasiswa++
           ) {
-            this.dataNilaiMahasiswaETS[mahasiswa].Nilai.push(0)
+            this.dataNilaiMahasiswaETS[mahasiswa].Nilai.push(0);
           }
         } else {
           this.headerParentNilaiEAS.push({
@@ -927,44 +927,44 @@ export default {
             colspan: 1,
             key: "EAS-newKategori",
             bobot: 0
-          })
+          });
           this.headerChildNilaiEAS.push({
             label: "Tugas 1",
             colspan: 1,
             key: "ETS-" + this.newKategori.nama_kategori + "-Tugas 1",
             bobot: 0
-          })
+          });
           for (
             mahasiswa = 0;
             mahasiswa < this.dataNilaiMahasiswaEAS.length;
             mahasiswa++
           ) {
-            this.dataNilaiMahasiswaEAS[mahasiswa].Nilai.push(0)
+            this.dataNilaiMahasiswaEAS[mahasiswa].Nilai.push(0);
           }
         }
       } else {
-        var totalColspan = 0
-        var i, index
+        var totalColspan = 0;
+        var i, index;
         if (this.newKategori.type === "ETS") {
           // console.log(this.headerParentNilaiETS[this.headerParentNilaiETS.findIndex(obj => obj.key === this.newKategori.parent)])
           // console.log(this.headerParentNilaiETS)
           index = this.headerParentNilaiETS.findIndex(
             obj => obj.key === this.newKategori.parent
-          )
+          );
           for (i = 0; i <= index; i++) {
-            totalColspan += this.headerParentNilaiETS[i].colspan
+            totalColspan += this.headerParentNilaiETS[i].colspan;
           }
           this.headerChildNilaiETS.splice(totalColspan, 0, {
             label: this.newKategori.nama_kategori,
             colspan: 1,
             key: "ETS-newKategori-newChild" + this.newKategori.nama_kategori,
             bobot: 0
-          })
+          });
           this.headerParentNilaiETS[
             this.headerParentNilaiETS.findIndex(
               obj => obj.key === this.newKategori.parent
             )
-          ].colspan += 1
+          ].colspan += 1;
 
           for (
             mahasiswa = 0;
@@ -975,30 +975,30 @@ export default {
               totalColspan - 2,
               0,
               0
-            )
+            );
           }
           // console.log(totalColspan)
           // this.headerParentNilaiETS[this.headerParentNilaiETS.findIndex(obj => obj.key === this.newKategori.parent)].colspan += 1
           // tambah kolom child
-          console.log(this.dataNilaiMahasiswaETS)
+          console.log(this.dataNilaiMahasiswaETS);
         } else {
           index = this.headerParentNilaiEAS.findIndex(
             obj => obj.key === this.newKategori.parent
-          )
+          );
           for (i = 0; i <= index; i++) {
-            totalColspan += this.headerParentNilaiEAS[i].colspan
+            totalColspan += this.headerParentNilaiEAS[i].colspan;
           }
           this.headerChildNilaiEAS.splice(totalColspan, 0, {
             label: this.newKategori.nama_kategori,
             colspan: 1,
             key: "ETS-newKategori-newChild" + this.newKategori.nama_kategori,
             bobot: 0
-          })
+          });
           this.headerParentNilaiEAS[
             this.headerParentNilaiEAS.findIndex(
               obj => obj.key === this.newKategori.parent
             )
-          ].colspan += 1
+          ].colspan += 1;
 
           for (
             mahasiswa = 0;
@@ -1009,7 +1009,7 @@ export default {
               totalColspan - 2,
               0,
               0
-            )
+            );
           }
           // console.log(this.headerParentNilaiEAS)
           // totalColspan = 0
@@ -1019,29 +1019,29 @@ export default {
           // console.log(totalColspan)
           // this.headerParentNilaiEAS[this.headerParentNilaiEAS.findIndex(obj => obj.key === this.newKategori.parent)].colspan += 1
         }
-        console.log(this.newKategori.parent)
+        console.log(this.newKategori.parent);
       }
       // console.log(this.newKategori)
-      this.closeKategori()
+      this.closeKategori();
     },
-    closeKategori (type) {
-      this.newKategori.parent = ""
-      this.newKategori.nama_kategori = ""
-      this.newKategori.type = ""
-      this.parentKategori = null
-      this.dialogKategori = false
+    closeKategori(type) {
+      this.newKategori.parent = "";
+      this.newKategori.nama_kategori = "";
+      this.newKategori.type = "";
+      this.parentKategori = null;
+      this.dialogKategori = false;
     },
-    downloadTemplate () {
+    downloadTemplate() {
       window.open(
         "https://drive.google.com/u/1/uc?id=1rr4m8CVjXLBj8CjogpB4LEt_wAMEp5_y&export=download"
-      )
+      );
     }
   },
-  async mounted () {
-    const identity = this.$store.getters.identity
-    this.nip = identity.preferred_username // "196610181995121000"
-    const kelas = await DosenAPI.getKelas(this.nip)
-    this.listKelas = kelas.uniqueClass
+  async mounted() {
+    const identity = this.$store.getters.identity;
+    this.nip = identity.preferred_username; // "196610181995121000"
+    const kelas = await DosenAPI.getKelas(this.nip);
+    this.listKelas = kelas.uniqueClass;
   }
-}
+};
 </script>

@@ -4,6 +4,12 @@
     max-width="1000"
     :style="{ background: currentTheme.background }"
   >
+    <h1 
+      v-if="jadwalDsn.length === 0"
+      class="mt-16 mb-16 text-center font-weight-black"
+    >
+      Tidak Ada Perkuliahan
+    </h1>
     <v-slide-group class="d-flex align-center" value="3">
       <v-slide-item
         v-for="(item, index) in jadwalDsn"
@@ -27,7 +33,7 @@
                 background: !item.active
                   ? currentTheme.surface
                   : currentTheme.surface,
-                color: currentTheme.onSurface,
+                color: currentTheme.onSurface
               }"
               :elevation="hover ? 12 : 2"
               :class="{ 'on-hover': hover }"
@@ -116,57 +122,57 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex"
-import PresensiDosen from "@/datasource/network/absensi/PresensiDosen"
-import DateTime from "@/utils/dateTime.js"
+import { mapGetters } from "vuex";
+import PresensiDosen from "@/datasource/network/absensi/PresensiDosen";
+import DateTime from "@/utils/dateTime.js";
 
-const INTERVAL = 500
-const moment = require("moment")
-let currentJadwal = 0
+const INTERVAL = 500;
+const moment = require("moment");
+let currentJadwal = 0;
 
 export default {
   name: "AbsenCard",
   props: {
     jadwalDsn: {
       type: Array,
-      default () {
-        return {}
+      default() {
+        return {};
       }
     },
     username: {
       type: String,
-      default () {
-        return {}
+      default() {
+        return {};
       }
     }
   },
-  async created () {
+  async created() {
     // this.testProgressBar()
-    var current = new Date()
-    this.currentHour = current.getHours()
-    this.currentMinute = current.getMinutes()
+    var current = new Date();
+    this.currentHour = current.getHours();
+    this.currentMinute = current.getMinutes();
     this.currentDate =
       current.getFullYear() +
       "-" +
       (current.getMonth() + 1) +
       "-" +
-      current.getDate()
-    this.currentDay = DateTime.getDay(current.getDay())
-    await this.presensiSchedule()
+      current.getDate();
+    this.currentDay = DateTime.getDay(current.getDay());
+    await this.presensiSchedule();
     this.intervalId = setInterval(() => {
-      current = new Date()
-      this.currentHour = current.getHours()
-      this.currentMinute = current.getMinutes()
+      current = new Date();
+      this.currentHour = current.getHours();
+      this.currentMinute = current.getMinutes();
       this.currentTime =
         this.currentHour +
         ":" +
         this.currentMinute +
         ":" +
-        current.getSeconds()
-      this.presensiSchedule()
-    }, INTERVAL)
+        current.getSeconds();
+      this.presensiSchedule();
+    }, INTERVAL);
   },
-  data () {
+  data() {
     return {
       currentHour: "",
       currentMinute: "",
@@ -182,7 +188,7 @@ export default {
       jamAkhir1: "23:20:00",
       jamAwal2: "23:30:00",
       jamAkhir2: "23:50:00"
-    }
+    };
   },
   computed: {
     ...mapGetters({
@@ -190,109 +196,111 @@ export default {
     })
   },
   methods: {
-    presensi (index, idStudi, idJadwal) {
+    presensi(index, idStudi, idJadwal) {
       if (this.jadwalDsn[currentJadwal].id_jadwal_kedua !== 0) {
         this.presensiDosen(
           index,
           this.jadwalDsn[currentJadwal].id_studi,
           this.jadwalDsn[currentJadwal].id_jadwal
-        )
+        );
         this.presensiDosen(
           index,
           this.jadwalDsn[currentJadwal].id_studi_kedua,
           this.jadwalDsn[currentJadwal].id_jadwal_kedua
-        )
+        );
       } else {
-        this.presensiDosen(index, idStudi, idJadwal)
+        this.presensiDosen(index, idStudi, idJadwal);
       }
     },
-    presensiDosen (index, idStudi, idJadwal) {
+    presensiDosen(index, idStudi, idJadwal) {
       PresensiDosen.presensiDosen(this.username, idStudi, idJadwal)
-        .then((response) => {
-          this.jadwalDsn[index].absen = true
-          this.jadwalDsn[currentJadwal].hadir = true
+        .then(response => {
+          this.jadwalDsn[index].absen = true;
+          this.jadwalDsn[currentJadwal].hadir = true;
           console.log(
             "Dosen telah absen untuk jadwal " +
               idStudi +
               "Pada tanggal " +
               this.currentDate
-          )
+          );
         })
-        .catch((e) => {
-          console.log(e)
-        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    statusKehadiranDosen (idJadwal) {
+    statusKehadiranDosen(idJadwal) {
       PresensiDosen.getStatusKehadiran(
         this.username,
         idJadwal,
         this.currentDate
       )
-        .then((response) => {
-          this.currentKehadiran = response.data
-          this.jadwalDsn[currentJadwal].hadir =
-            this.currentKehadiran[0].isHadir
+        .then(response => {
+          this.currentKehadiran = response.data;
+          this.jadwalDsn[
+            currentJadwal
+          ].hadir = this.currentKehadiran[0].isHadir;
           console.log(
             "Status kehadiran dosen pada jadwal " +
               idJadwal +
               " adalah " +
               this.jadwalDsn[currentJadwal].hadir
-          )
+          );
         })
-        .catch((e) => {
-          console.log(e)
-        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    toPerkuliahan (index, item) {
-      this.$router.push({ name: "Perkuliahan", params: { item } })
+    toPerkuliahan(index, item) {
+      this.$router.push({ name: "Perkuliahan", params: { item } });
     },
-    async presensiSchedule () {
+    async presensiSchedule() {
       //  Jika Jadwalnya masih ada
+      // console.log(currentJadwal);
       if (currentJadwal < this.jadwalDsn.length) {
         // Pengubahan Format
-        var format = "HH:mm:ss"
-        var currentTime = moment(this.currentTime, format)
+        var format = "HH:mm:ss";
+        var currentTime = moment(this.currentTime, format);
         var beforeTime = moment(
           this.jadwalDsn[currentJadwal].waktu_mulai,
           format
-        )
+        );
         var afterTime = moment(
           this.jadwalDsn[currentJadwal].waktu_selesai,
           format
-        )
+        );
 
         // Perhitungan durasi, dilakukan untuk nilai progressbar
-        var d = moment.duration(afterTime.diff(beforeTime, "seconds"))
-        this.jadwalDsn[currentJadwal].duration = d._milliseconds
+        var d = moment.duration(afterTime.diff(beforeTime, "seconds"));
+        this.jadwalDsn[currentJadwal].duration = d._milliseconds;
 
         // Lama Matkul sudah berjalan
         var jadwalDuration = moment.duration(
           currentTime.diff(beforeTime, "seconds")
-        )
+        );
         this.jadwalDsn[currentJadwal].currentDuration =
-          jadwalDuration._milliseconds
+          jadwalDuration._milliseconds;
 
         // Pengurangan waktu mulai (waktu mulai absen adalah 30 menit sebelum jam mulai mata kuliah)
-        beforeTime.subtract(30, "minutes")
+        beforeTime.subtract(30, "minutes");
 
         // Pengecekan tombol, apakah mahasiswa sudah absen, tidak akan hadir, atau sudah absen
-        this.cekAktivasiTombol(this.jadwalDsn[currentJadwal].id_jadwal)
+        this.cekAktivasiTombol(this.jadwalDsn[currentJadwal].id_jadwal);
 
         // Pengecekan, apakah saat ini berada pada interval waktu mata kuliah yang sedang berlangsung atau tidak
         if (currentTime.isBetween(beforeTime, afterTime)) {
           // Pengecekan, apakah mahasiswa ybs tidak izin dan belum absen, dilakukan untuk aktivasi tombol
           if (this.currentKehadiran[0].isHadir === false) {
           } else if (this.currentKehadiran[0].isHadir === true) {
-            this.jadwalDsn[currentJadwal].absen = true
-            this.jadwalDsn[currentJadwal].hadir = true
+            this.jadwalDsn[currentJadwal].absen = true;
+            this.jadwalDsn[currentJadwal].hadir = true;
           }
 
           // Perhitungan untuk value dari progressbar dan menyatakan saat ini mata kuliah sedang berlangsung
           this.jadwalDsn[currentJadwal].progress =
             (this.jadwalDsn[currentJadwal].currentDuration /
               this.jadwalDsn[currentJadwal].duration) *
-            100
-          this.jadwalDsn[currentJadwal].active = false
+            100;
+          this.jadwalDsn[currentJadwal].active = false;
           // this.jadwalDsn[currentJadwal].currentDuration = this.jadwalDsn[currentJadwal].currentDuration + 15
         } else {
           //  kondisi ketika saat ini bukan dalam interval waktu mata kuliah
@@ -303,36 +311,37 @@ export default {
               this.currentKehadiran[0].id_keterangan === "sakit" ||
               this.currentKehadiran[0].id_keterangan === "izin"
             ) {
-              this.jadwalDsn[currentJadwal].absen = true
-              this.jadwalDsn[currentJadwal].hadir = true
+              this.jadwalDsn[currentJadwal].absen = true;
+              this.jadwalDsn[currentJadwal].hadir = true;
             }
-            this.jadwalDsn[currentJadwal].absen = true
-            this.jadwalDsn[currentJadwal].active = true
-            this.jadwalDsn[currentJadwal].progress = 100
+            this.jadwalDsn[currentJadwal].absen = true;
+            this.jadwalDsn[currentJadwal].active = true;
+            this.jadwalDsn[currentJadwal].progress = 100;
             // if (this.currentKehadiran[0].isHadir === true && this.currentKehadiran[0].id_keterangan === null) {
             //   console.log("Mahasiswa sudah absen di jadwal ke- " + this.jadwalDsn[currentJadwal].id_jadwal)
             // }
-            if (currentJadwal !== this.jadwalDsn.length - 1) { currentJadwal++ } else { clearInterval(this.intervalId) }
+            if (currentJadwal !== this.jadwalDsn.length - 1) currentJadwal++;
+            else clearInterval(this.intervalId);
           } else {
             //  jika sekarang bukan waktu setelah mata kuliah (keknya inisalah dan perlu diperbaiki kondisinya)
-            this.jadwalDsn[currentJadwal].active = true
-            this.jadwalDsn[currentJadwal].absen = true
+            this.jadwalDsn[currentJadwal].active = true;
+            this.jadwalDsn[currentJadwal].absen = true;
           }
         }
       } else {
-        clearInterval(this.intervalId)
+        clearInterval(this.intervalId);
       }
     },
-    cekAktivasiTombol (idJadwal) {
-      this.statusKehadiranDosen(idJadwal)
+    cekAktivasiTombol(idJadwal) {
+      this.statusKehadiranDosen(idJadwal);
     },
-    testProgressBar () {
-      this.jadwalDsn[0].waktu_mulai = this.jamAwal1
-      this.jadwalDsn[0].waktu_selesai = this.jamAkhir1
-      this.jadwalDsn[1].waktu_mulai = this.jamAwal2
-      this.jadwalDsn[1].waktu_selesai = this.jamAkhir2
+    testProgressBar() {
+      this.jadwalDsn[0].waktu_mulai = this.jamAwal1;
+      this.jadwalDsn[0].waktu_selesai = this.jamAkhir1;
+      this.jadwalDsn[1].waktu_mulai = this.jamAwal2;
+      this.jadwalDsn[1].waktu_selesai = this.jamAkhir2;
     },
-    cekMatkulSama () {
+    cekMatkulSama() {
       for (var i in this.jadwalDsn) {
         if (
           this.jadwalDsn[i].mata_kuliah.nama_mata_kuliah ===
@@ -343,16 +352,16 @@ export default {
               this.jadwalDsn[i] +
               " sama dengan jadwal " +
               this.jadwalDsn[i]
-          )
+          );
         }
       }
     }
   },
-  beforeDestroy () {
-    clearInterval(this.intervalId)
-    currentJadwal = 0
+  beforeDestroy() {
+    clearInterval(this.intervalId);
+    currentJadwal = 0;
   }
-}
+};
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@ import multer from 'multer'
 import path from 'path'
 
 const storage = multer.diskStorage({
-  destination: process.cwd() + '/public/uploads',
+  destination: process.cwd() + '\\public\\uploads',
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   }
@@ -27,7 +27,7 @@ function checkFileType (file, cb) {
 const upload = multer({
   storage,
   limits: {
-    fileSize: 100000
+    fileSize: 1000000
   },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb)

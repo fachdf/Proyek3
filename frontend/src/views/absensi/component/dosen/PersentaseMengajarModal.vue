@@ -28,7 +28,7 @@
             item
             :mobile-breakpoint="0"
             :headers="headers"
-            :items="items"
+            :items="dataRekap"
             :hide-default-footer="true"
             class="font-weight-medium"
           >
@@ -43,8 +43,8 @@
           </template>
           </v-data-table>
           <div class="mt-6 font-weight-bold">
-            <p>Total Minggu Perkuliahan: 6 Minggu</p>
-            <p>Total Minggu Perkuliahan Tersisa: 16 Minggu</p>
+            <p>Total Minggu Perkuliahan: {{ dataRekap.length }} Minggu</p>
+            <p>Total Minggu Perkuliahan Tersisa: {{ 16 - dataRekap.length }} Minggu</p>
           </div>
         </div>
       </v-card>
@@ -57,36 +57,40 @@ export default {
   name: "PersentaseMengajarModal",
   props: {
     matakuliah: {
-      type: String
-    }
+      type: String,
+    },
+    presensi: {
+      type: Array,
+    },
   },
-  data () {
+  data() {
     return {
+      dataRekap: [],
       headers: [
         {
           text: "Pertemuan Ke-",
           align: "center",
           sortable: false,
-          value: "pertemuan"
+          value: "index",
         },
         {
           text: "Tanggal",
           align: "center",
           sortable: false,
-          value: "tanggal"
+          value: "tanggal",
         },
         {
           text: "Status Pengisisan Bap",
           align: "center",
           sortable: false,
-          value: "bap"
+          value: "bap",
         },
         {
           text: "Status Kehadiran",
           align: "center",
           sortable: false,
-          value: "kehadiran"
-        }
+          value: "isHadir",
+        },
       ],
       items: [
         {
@@ -124,11 +128,20 @@ export default {
           tanggal: Date.now(),
           bap: true,
           kehadiran: true
-        }
+        },
       ]
+    };
+  },
+  created() {
+    this.dataRekap = this.presensi.filter((e) => {
+      return e.nama_mata_kuliah === this.matakuliah;
+    });
+    for (let i = 0; i < this.dataRekap.length; i++) {
+      this.dataRekap[i].index = i + 1;
     }
+    console.log(this.dataRekap);
   }
-}
+};
 </script>
 
 <style>

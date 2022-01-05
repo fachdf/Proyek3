@@ -195,6 +195,7 @@ export default {
   }),
   created () {
     this.user.nomorInduk = this.identity.preferred_username
+
   },
   computed: {
     ...mapGetters({
@@ -219,7 +220,8 @@ export default {
   },
   methods: {
     logout: function () {
-      this.$store.dispatch("logout", this.$router)
+      this.$store.dispatch("deleteAuthStorage");
+      location.reload();
     },
     collapseSubItems () {
       this.isActive = false
@@ -231,7 +233,7 @@ export default {
     },
     ...mapActions({
       toogleTheme: "theme/toogleDark"
-    })
+    }),
 
   },
   watch: {
